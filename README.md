@@ -1,88 +1,108 @@
-# 🚗 Car Gallery Management System
+🚗 CarGallery (Multi-Gallery) Management System
 
-## 📌 Project Overview
-The Car Gallery Management System is a web-based backend application that allows administrators to manage car inventory efficiently.  
-The system supports CRUD operations (Create, Read, Update, Delete) for cars and brands, ensuring data consistency and structured inventory management.
+📌 Project Overview
+CarGallery is a full-stack web application for car dealerships (galleries).
+It provides a customer-facing catalog and an admin panel to manage inventory.
+New scope: arabam.com-like flow → user selects a City, then selects a Gallery in that city, then browses that gallery’s cars.
 
 This project was developed as part of the Project Management course.
 
----
+🎯 Project Objectives
+- Manage car inventory digitally (Cars + Brands)
+- Provide a clean customer catalog (search / filter / sort)
+- Enable admin management (add / update / delete cars, manage brands, manage images)
+- Prepare a scalable Multi-Gallery model (City → Gallery → Catalog)
+- Support maintainability with API-first architecture + CI pipeline
 
-## 🎯 Project Objectives
-- Manage car inventory digitally
-- Add, update, and delete car records
-- Maintain Brand–Car (1-N) relationship
-- Ensure database consistency and integrity
-- Provide a scalable backend architecture with API support
+👥 Team Members & Roles
+Name                 Role
+Berk Yalçınkaya      Project Manager
+Hıdır Işıkbaş        Frontend Developer
+Asya Yayla           Risk Management
+Burak Bayraktar      Database Developer
+Hasan Eren Ertekin   Backend Developer
 
----
+⚙️ Technologies Used
+Frontend
+- React 18 + TypeScript (Vite)
+- axios (API calls)
 
-## 👥 Team Members & Roles
-| Name | Role |
-|------|------|
-| Berk Yalçınkaya | Project Manager |
-| Hıdır Işıkbaş | Backend Developer |
-| Asya Yayla | Risk Management |
-| Burak Bayraktar | Database Developer |
-| Hasan Eren Ertekin | Backend Developer |
-
----
-
-## ⚙️ Technologies Used
-- .NET Core / Web API
+Backend
+- ASP.NET Core Web API
 - Entity Framework Core
-- SQL Server
-- Swagger (API Testing)
+- Swagger / OpenAPI
+
+Database
+- SQLite (development)
+- (Optional) upgrade path: PostgreSQL / SQL Server
+
+DevOps / Tools
 - Git & GitHub
+- GitHub Actions (CI)
 
----
+🧩 System Features (MVP)
+Customer
+- Register / Login
+- Browse catalog (search / filter / sort)
+- Car detail page with images and specs
 
-## 🧩 System Features
-- Add new car records
-- Update car information
-- Delete cars from the gallery
-- Manage brand and car relationships
-- RESTful API architecture
-- Validation and data consistency checks
+Admin
+- Car management: add / edit / delete
+- Brand management: add / edit / delete
+- Image management: upload / delete (car images)
+- User management: view users + role operations (as defined in the project scope)
 
----
+🧭 Multi-Gallery (New Scope)
+- City selection page
+- Gallery directory by selected city
+- Gallery-scoped catalog (all cars filtered by selected GalleryId)
+- Admin scoping: admins manage only their assigned gallery (planned enforcement)
 
-## 🗂️ Project Documents
-The repository includes the following project management artifacts:
-- 📄 Project Management Report
+▶️ How to Run (Local)
+Backend
+- Open backend folder
+- dotnet run
+
+Frontend
+- Open frontend folder
+- npm install
+- npm run dev
+
+(After both are running, open the frontend URL shown in terminal.)
+
+✅ CI / CD
+- CI runs on pushes to main via GitHub Actions.
+- Workflow file: .github/workflows/ci.yml
+Demo goal: show a green pipeline run in GitHub → Actions.
+
+🗂️ Project Documents
+The repository includes:
+- 📄 Project Management Report (updated)
 - 📊 Timeline & Budget Planning (Excel)
-- 📐 UML Diagram
-- 💻 Source Code (CRUD API for Car & Brand)
+- ⚠️ Risk Analysis Updates (Week 3)
+- 📐 UML Diagrams (MVP + Multi-Gallery)
+- 🎬 Demo Plan (live demo steps)
 
----
-
-## 📅 Project Timeline (Summary)
+📅 Project Timeline (Summary)
 - February: Planning, architecture design, data modeling
-- March: Service layer & DTO implementation
-- April: CRUD operations & validation logic
-- May: Refactoring, testing, and edge case handling
-- June: Final documentation and release
+- March: Full-stack integration (frontend + backend)
+- April: Admin panel maturity, image management, stabilization
+- May: Multi-Gallery (City → Gallery selection) + scoping + testing
+- June: Final documentation + release + live demo
 
----
+⚠️ Risk Management (Short)
+Main risks:
+- CRUD/API failures
+- Data inconsistency after update/delete
+- Migration / foreign key conflicts
+- Invalid data entry
+- Cross-gallery data leakage (multi-gallery scope)
+Mitigation: validation rules, role checks, scoping tests, incremental migrations, and regression testing.
 
-## ⚠️ Risk Management
-Main risks considered in the project:
-- API failure during CRUD operations
-- Data inconsistency after updates/deletions
-- Foreign key and migration conflicts
-- Invalid data entry risks
-- Accidental data deletion
-
-Mitigation strategies include validation rules, transaction control, and comprehensive testing.
-
----
-
-## 📐 UML Diagram
-UML Class Diagram was designed to represent:
-- Car Entity
-- Brand Entity
-- BaseEntity structure
-- DTO classes and relationships
-
-Source: uml.jpg
-
+📐 UML Diagram
+Updated UML includes:
+- City, Gallery (new scope)
+- Car, Brand, User + role model
+- Gallery scoping relations (GalleryId)
+Files:
+- docs/architecture/ (PNG/PDF)
