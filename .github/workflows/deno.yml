@@ -1,42 +1,67 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-# This workflow will install Deno then run `deno lint` and `deno test`.
-# For more information see: https://github.com/denoland/setup-deno
-
-name: Deno
+name: CI (.NET + React)
 
 on:
   push:
-    branches: ["main"]
+    branches: [ "main" ]
   pull_request:
-    branches: ["main"]
+    branches: [ "main" ]
 
 permissions:
   contents: read
 
+env:
+  DOTNET_VERSION: "8.0.x"
+  NODE_VERSION: "20"
+  # DÜZELT: Repo içindeki gerçek yollar
+  BACKEND_PATH: "CarGallery-master/CarGallery - Backend"
+  FRONTEND_PATH: "CarGallery-master/CarGallery-Frontend"
+
 jobs:
-  test:
+  backend:
+    name: Backend - build (and test if exists)
     runs-on: ubuntu-latest
-
     steps:
-      - name: Setup repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Deno
-        # uses: denoland/setup-deno@v1
-        uses: denoland/setup-deno@61fe2df320078202e33d7d5ad347e7dcfa0e8f31  # v1.1.2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
         with:
-          deno-version: v1.x
+          dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      # Uncomment this step to verify the use of 'deno fmt' on each commit.
-      # - name: Verify formatting
-      #   run: deno fmt --check
+      - name: Restore
+        working-directory: ${{ env.BACKEND_PATH }}
+        run: dotnet restore
 
-      - name: Run linter
-        run: deno lint
+      - name: Build
+        working-directory: ${{ env.BACKEND_PATH }}
+        run: dotnet build -c Release --no-restore
 
-      - name: Run tests
-        run: deno test -A
+      - name: Test (skip if none)
+        working-directory: ${{ env.BACKEND_PATH }}
+        run: |
+          if ls **/*Tests*.csproj 1> /dev/null 2>&1; then
+            dotnet test -c Release --no-build
+          else
+            echo "No test project found, skipping dotnet test."
+          fi
+
+  frontend:
+    name: Frontend - build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+          cache-dependency-path: ${{ env.FRONTEND_PATH }}/package-lock.json
+
+      - name: Install
+        working-directory: ${{ env.FRONTEND_PATH }}
+        run: npm ci
+
+      - name: Build
+        working-directory: ${{ env.FRONTEND_PATH }}
+        run: npm run build
