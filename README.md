@@ -15,12 +15,13 @@ This project was developed as part of the Project Management course.
 - Support maintainability with API-first architecture + CI pipeline
 
 👥 Team Members & Roles
-Name                 Role
-Berk Yalçınkaya      Project Manager
-Hıdır Işıkbaş        Frontend Developer
-Asya Yayla           Risk Management
-Burak Bayraktar      Database Developer
-Hasan Eren Ertekin   Backend Developer
+| Name | Role |
+|------|------|
+| Berk Yalçınkaya | Project Manager |
+| Hıdır Işıkbaş | Frontend Developer |
+| Asya Yayla | Risk Management |
+| Burak Bayraktar | Database Developer |
+| Hasan Eren Ertekin | Backend Developer |
 
 ⚙️ Technologies Used
 Frontend
