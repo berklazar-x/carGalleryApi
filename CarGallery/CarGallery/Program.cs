@@ -19,6 +19,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Add CORS
+var frontendUrl = Environment.GetEnvironmentVariable("FRONTEND-URL") ?? "http://localhost:3000";
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend",
@@ -26,7 +27,8 @@ builder.Services.AddCors(options =>
         {
             policy.WithOrigins(
                       "http://localhost:3000",
-                      "https://car-gallery-api.vercel.app"
+                      "https://car-gallery-api.vercel.app",
+                      frontendUrl
                   )
                   .AllowAnyHeader()
                   .AllowAnyMethod();
