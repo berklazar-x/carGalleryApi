@@ -1,0 +1,11 @@
+**/.git
+**/.gitignore
+**/.gitattributes
+**/obj
+**/bin
+**/*.user
+**/*.suo
+CarGallery-Frontend/
+*.md
+*.sln
+*.sh
