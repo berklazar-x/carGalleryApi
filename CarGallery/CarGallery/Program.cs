@@ -4,10 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var connectionString = Environment.GetEnvironmentVariable("DATABASE-URL")
+    ?? builder.Configuration.GetConnectionString("Default");
+
 builder.Services.AddDbContext<CarGalleryContext>(options =>
-options.UseSqlite(
-    builder.Configuration.GetConnectionString("Default")
-    ));
+    options.UseNpgsql(connectionString));
 
 
 
@@ -37,6 +38,12 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// Auto-create/migrate database on startup
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<CarGalleryContext>();
+    db.Database.EnsureCreated();
+}
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
