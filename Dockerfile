@@ -3,14 +3,14 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copy csproj and restore dependencies
-COPY CarGallery/CarGallery.csproj CarGallery/
-RUN dotnet restore CarGallery/CarGallery.csproj
+COPY CarGallery/CarGallery/CarGallery.csproj CarGallery/CarGallery/
+RUN dotnet restore CarGallery/CarGallery/CarGallery.csproj
 
 # Copy the rest of the source code
-COPY CarGallery/ CarGallery/
+COPY CarGallery/CarGallery/ CarGallery/CarGallery/
 
 # Publish the application
-WORKDIR /src/CarGallery
+WORKDIR /src/CarGallery/CarGallery
 RUN dotnet publish CarGallery.csproj -c Release -o /app/publish --no-restore
 
 # ---- Runtime Stage ----
